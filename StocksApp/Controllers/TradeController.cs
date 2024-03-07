@@ -5,6 +5,7 @@ using ServiceContracts;
 using StocksApp.ViewModels;
 using ServiceContracts.DTOs;
 using Rotativa.AspNetCore;
+using StocksApp.Filters.ActionFilters;
 
 namespace StocksApp.Controllers
 {
@@ -92,6 +93,7 @@ namespace StocksApp.Controllers
 
         [HttpPost]
         [Route("[Action]")]
+        [TypeFilter(typeof(RedirectOnModelErrorActionFilter))]
         public async Task<IActionResult> BuyOrder(BuyOrderRequest buyOrderRequest)
         {
             ModelState.Remove("DateAndTimeOfOrder");
@@ -110,6 +112,7 @@ namespace StocksApp.Controllers
 
         [HttpPost]
         [Route("[Action]")]
+        [TypeFilter(typeof(RedirectOnModelErrorActionFilter))]
         public async Task<IActionResult> SellOrder(SellOrderRequest sellOrderRequest)
         {
             ModelState.Remove("DateAndTimeOfOrder");

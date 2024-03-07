@@ -31,7 +31,6 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .ReadFrom.Services(app.Services)
     .WriteTo.Console()
-    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)
     .CreateLogger();
 
 if (builder.Environment.IsDevelopment())
