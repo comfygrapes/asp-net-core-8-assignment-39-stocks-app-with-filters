@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Microsoft Corp";
     ViewData["ActivePage"] = "Trade/Index";
+    var errors = ViewBag.Errors;
 }
 
 <input type="hidden" id="apiKey" value="@ViewBag.ApiKey" />
@@ -28,7 +29,7 @@
                     <div>
                         <label asp-for="Quantity">Quantity:</label>
                     </div>
-                    <input type="number" asp-for="Quantity" class="form-input" style="width: 100px"/>
+                    <input type="number" asp-for="Quantity" class="form-input" style="width: 100px"/><br />
                     <span asp-validation-for="Quantity"></span>
                 </div>
                 <div class="flex-1 mt" style="margin-top: 15px">
@@ -37,6 +38,17 @@
                     <input type="hidden" asp-for="Price" />
                     <button type="submit" class="button button-red-back" asp-action="SellOrder" asp-controller="Trade" style="margin-right: 8px;"><i class="fa-solid fa-arrow-down"></i> Sell</button>
                     <button type="submit" class="button button-green-back" asp-action="BuyOrder" asp-controller="Trade"><i class="fa-solid fa-arrow-up"></i> Buy</button>
+
+                    <!-- Display error messages -->
+                    @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
+                    {
+                        <ul class="error-list">
+                            @foreach (var error in ViewBag.Errors)
+                            {
+                                <li>@error</li>
+                            }
+                        </ul>
+                    }
                 </div>
             </form>
         </div>

@@ -21,18 +21,16 @@ namespace StocksApp.Filters.ActionFilters
         public void OnActionExecuting(ActionExecutingContext context)
         {
             _logger.LogInformation("On Executing");
-            if (!context.ModelState.IsValid)
+            if (!context.ModelState.IsValid && context.ActionArguments.TryGetValue("orderRequest", out var retrievedOrderRequest))
             {
                 var stockSymbol = "";
-                if (context.ActionArguments.TryGetValue("buyOrderRequest", out var retrievedBuyOrderRequest)) 
+                if (retrievedOrderRequest is BuyOrderRequest buyOrderRequest)
                 {
-                    var buyOrderRequest = retrievedBuyOrderRequest as BuyOrderRequest;
-                    stockSymbol = buyOrderRequest?.StockSymbol;
+                    stockSymbol = buyOrderRequest.StockSymbol;
                 }
-                else if (context.ActionArguments.TryGetValue("sellOrderRequest", out var retrievedSellOrderRequest))
+                else if (retrievedOrderRequest is SellOrderRequest sellOrderRequest)
                 {
-                    var sellOrderRequest = retrievedSellOrderRequest as SellOrderRequest;
-                    stockSymbol = sellOrderRequest?.StockSymbol;
+                    stockSymbol = sellOrderRequest.StockSymbol;
                 }
 
                 context.Result = new RedirectToActionResult("Index", "Trade", new { stockSymbol });

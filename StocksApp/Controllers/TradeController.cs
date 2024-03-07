@@ -93,15 +93,15 @@ namespace StocksApp.Controllers
 
         [HttpPost]
         [Route("[Action]")]
-        [TypeFilter(typeof(RedirectOnModelErrorActionFilter))]
-        public async Task<IActionResult> BuyOrder(BuyOrderRequest buyOrderRequest)
+        [TypeFilter(typeof(CreateOrderActionFilter))]
+        public async Task<IActionResult> BuyOrder(BuyOrderRequest orderRequest)
         {
             ModelState.Remove("DateAndTimeOfOrder");
             if (ModelState.IsValid)
             {
-                buyOrderRequest.DateAndTimeOfOrder = DateTime.Now;
+                orderRequest.DateAndTimeOfOrder = DateTime.Now;
 
-                await _stocksService.CreateBuyOrder(buyOrderRequest);
+                await _stocksService.CreateBuyOrder(orderRequest);
 
                 return RedirectToAction("Orders", "Trade");
             }
@@ -112,15 +112,15 @@ namespace StocksApp.Controllers
 
         [HttpPost]
         [Route("[Action]")]
-        [TypeFilter(typeof(RedirectOnModelErrorActionFilter))]
-        public async Task<IActionResult> SellOrder(SellOrderRequest sellOrderRequest)
+        [TypeFilter(typeof(CreateOrderActionFilter))]   
+        public async Task<IActionResult> SellOrder(SellOrderRequest orderRequest)
         {
             ModelState.Remove("DateAndTimeOfOrder");
             if (ModelState.IsValid)
             {
-                sellOrderRequest.DateAndTimeOfOrder = DateTime.Now;
+                orderRequest.DateAndTimeOfOrder = DateTime.Now;
 
-                await _stocksService.CreateSellOrder(sellOrderRequest);
+                await _stocksService.CreateSellOrder(orderRequest);
 
                 return RedirectToAction("Orders", "Trade"); 
             }

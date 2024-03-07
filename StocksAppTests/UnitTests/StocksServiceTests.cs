@@ -27,7 +27,7 @@ namespace StocksAppTests.UnitTests
             _stocksRepositoryMock = new Mock<IStocksRepository>();
             _stocksRepository = _stocksRepositoryMock.Object;
 
-            _stocksService = new StocksService(_stocksRepository);
+            _stocksService = new StocksService(_stocksRepository, null);
         }
 
         #region CreateBuyOrder
